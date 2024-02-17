@@ -10,13 +10,35 @@ The user have 3 lives and wins if all the bricks are gone. Game over happen when
 
 ## PreRequisite
 
-Download fonts
+To compile you have to install the following packages:
+
+```bash
+sudo apt update
+sudo apt install \
+    make \
+    cmake \
+    libxrandr-dev \
+    libxcursor-dev \
+    libudev-dev \
+    libopenal-dev \
+    libflac-dev \
+    libvorbis-dev \
+    libgl1-mesa-dev \
+    libegl1-mesa-dev \
+    libdrm-dev \
+    libgbm-dev
+```
+Set up the  SFML library properly using the [tutorials](https://www.sfml-dev.org/tutorials/2.6/) and [cmake-guide](https://www.sfml-dev.org/tutorials/2.6/start-cmake.php)
+
+To be able to see the text in the game, you need** to download fonts
 
 ```bash
 sudo apt install ttf-mscorefonts-installer
 ```
 
 and find the root folder to the verdana font and, replace the path in l.55 in the entityManager.cpp
+
+** due to copywrite issues.
 
 ## Build
 
