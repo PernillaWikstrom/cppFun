@@ -21,7 +21,7 @@ bool brick::isColorLevelTooLow() const noexcept
 
 brick::brick(float x, float y)
 {
-	if (texture.loadFromFile("figures/brick.jpg"))
+	if (texture.loadFromFile("figures//brick.jpg"))
 	{
 		sprite.setTexture(texture);
 	}
