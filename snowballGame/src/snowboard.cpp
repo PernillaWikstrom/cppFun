@@ -20,13 +20,11 @@ void snowboard::update()
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left) && !(x() < config::snowboardWidth))
 	{
-		// left key is pressed: move our character
 		sprite.move(-config::snowboardSpeed, zeroSpeed);
 	}
 
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && !(x() > config::windowWidth - config::snowboardWidth))
 	{
-		// left key is pressed: move our character
 		sprite.move(config::snowboardSpeed, zeroSpeed);
 	}
 }

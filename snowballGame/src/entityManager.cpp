@@ -27,15 +27,13 @@ void entityManager::refresh()
 					  end(allEntities));
 }
 
-// Function to destroy all entities
 void entityManager::clear()
 {
-	// Again, we must clean up the alias pointers first
+	// Clean up the alias pointers first
 	groupedEntities.clear();
 	allEntities.clear();
 }
 
-// Function to update all the entities
 void entityManager::update()
 {
 	for (auto &e : allEntities)
@@ -44,7 +42,6 @@ void entityManager::update()
 	}
 }
 
-// Function to update make all the entities draw themselves
 void entityManager::draw(sf::RenderWindow &window)
 {
 	for (auto &e : allEntities)
@@ -60,7 +57,6 @@ gameManager::gameManager()
 	_verdana.loadFromFile("/usr/share/fonts/truetype/msttcorefonts/verdana.ttf");
 	// verdana.loadFromFile("C:/Windows/fonts/Verdana.ttf");
 
-	// Configure our text objects
 	_textState.setFont(_verdana);
 	_textState.setPosition(config::windowWidth * 0.5f - 125.0f, config::windowHeight * 0.5f - 100.0f);
 	_textState.setCharacterSize(35);
@@ -72,13 +68,12 @@ gameManager::gameManager()
 	_textLives.setFillColor(sf::Color::White);
 	_textLives.setString("Lives: " + std::to_string(_lives));
 }
-// (Re)initialize the game
+
 void gameManager::reset()
 {
 	_state = gameStates::INACTIVE;
 	_lives = config::lives;
 
-	// Destroy all the entities and re-create them
 	_entityManager.clear();
 
 	_entityManager.create<background>(0.0f, 0.0f);
@@ -89,8 +84,6 @@ void gameManager::reset()
 	{
 		for (int j = 0; j < config::brickRows; ++j)
 		{
-
-			// Create the brick object
 			_entityManager.create<brick>(config::bricksOffset + (i + 1) * config::brickWidth, (j + 1) * config::brickHeight);
 		}
 	}
@@ -122,7 +115,6 @@ void gameManager::run()
 
 	while (game_window.isOpen())
 	{
-		// Clear the screen
 		game_window.clear(sf::Color::Black);
 
 		// Check for any events since the last loop iteration
@@ -136,9 +128,6 @@ void gameManager::run()
 				game_window.close();
 		}
 
-		// Check for user input
-		// If the user presses "Escape", we jump out of the loop
-		// This will terminate the program
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
 			break;
 
@@ -151,7 +140,6 @@ void gameManager::run()
 			_pressedPause = false;
 		}
 
-		// If the user presses "R", we reset the game
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::R))
 		{
 			reset();
@@ -171,13 +159,11 @@ void gameManager::run()
 				_state = gameStates::INACTIVE;
 			}
 
-			// If there are no remaining bricks on the screen, the player has won!
 			if (_entityManager.getAll<brick>().empty())
 			{
 				_state = gameStates::WON;
 			}
 
-			// If the player has used up all their lives, the game is over!
 			if (_lives <= 0)
 			{
 				_state = gameStates::GAME_OVER;
@@ -185,7 +171,6 @@ void gameManager::run()
 
 			_textLives.setString("Lives: " + std::to_string(_lives));
 
-			// Calculate the updated graphics
 			_entityManager.update();
 
 			// For every ball, call a function which
@@ -199,8 +184,6 @@ void gameManager::run()
 											  { _entityManager.applyAll<snowboard>([&snowball](auto &snowboard)
 																				   { handleCollision(snowball, snowboard); }); });
 			_entityManager.refresh();
-
-			// Display the updated graphics
 			_entityManager.draw(game_window);
 			_textState.setString("");
 			game_window.draw(_textState);
