@@ -20,17 +20,34 @@ int main()
     SingleLinkedList result = s.addTwoNumbers(s1.getHead(), s2.getHead());
     result.displayList();
 
-    SingleLinkedList l1, l2;
-    l1.insertAtBack(0);
-    l1.insertAtBack(1);
-    l1.insertAtBack(4);
-    l1.insertAtBack(5);
-    l1.insertAtBack(7);
-    l1.displayList();
-    l2.insertAtBack(-1);
-    l2.insertAtBack(-2);
-    l2.displayList();
+    SingleLinkedList g1;
+    g1.insertAtBack(13);
+    g1.insertAtBack(10);
+    g1.insertAtBack(1);
+    g1.insertAtBack(7);
+    g1.displayList();
 
-    SingleLinkedList mergedLists = s.mergeTwoSortedLists(l1.getHead(), l2.getHead());
-    mergedLists.displayList();
+    ListNode *p1 = g1.getHead();
+    s.mergeSortList(&p1);
+    std::cout << "\nSingle Linked List sorted:"
+              << std::endl;
+    p1->displayList();
+
+    SingleLinkedList g2;
+    g2.insertAtBack(-13);
+    g2.insertAtBack(130);
+    g2.insertAtBack(12);
+    g2.insertAtBack(72);
+    g2.displayList();
+
+    ListNode *p2 = g2.getHead();
+    s.mergeSortList(&p2);
+    std::cout << "\nSingle Linked List sorted:"
+              << std::endl;
+    p2->displayList();
+
+    ListNode *mergedLists = s.mergeTwoSortedLists(p1, p2);
+    std::cout << "\nSingle Linked Lists merged:"
+              << std::endl;
+    mergedLists->displayList();
 }

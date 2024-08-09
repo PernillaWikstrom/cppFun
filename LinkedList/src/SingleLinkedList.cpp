@@ -1,11 +1,9 @@
 #include <iostream>
 #include <SingleLinkedList.hpp>
 
-void ListNode::displayList(ListNode *node)
+void ListNode::displayList()
 {
-    std::cout << "\nThe nodes contains:"
-              << std::endl;
-    ListNode *current = node;
+    ListNode *current = this;
     while (current != NULL)
     {
 
@@ -72,13 +70,14 @@ ListNode *SingleLinkedList::getHead()
 
 void SingleLinkedList::displayList()
 {
-    std::cout << "\nSingle Linked List with " << getNumberNodes() << " elements:"
-              << std::endl;
-    ListNode *current = head;
-    while (current != NULL)
-    {
 
-        std::cout << current->val << std::endl;
-        current = current->next;
+    if (head != nullptr)
+    {
+        std::cout << "\nSingle Linked List with " << getNumberNodes() << " elements:"
+                  << std::endl;
+        head->displayList();
+        return;
     }
+    std::cout << "\nSingle Linked List is empty"
+              << std::endl;
 }

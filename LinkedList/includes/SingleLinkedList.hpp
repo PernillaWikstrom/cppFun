@@ -13,8 +13,8 @@ struct ListNode
     ListNode(int x, ListNode *next) : val(x), next(next) {}
 
 public:
-    void displayList(ListNode *node);
-    ~ListNode() {}
+    void displayList();
+    ~ListNode() { next = nullptr; }
 };
 
 class SingleLinkedList
