@@ -2,38 +2,52 @@
 
 #pragma once
 
-struct ListNode
+struct Node
 {
-    int val;
-    ListNode *next;
-    ListNode() : val(0), next(nullptr)
+    int data;
+    Node *next;
+    // Default constructor
+    Node() : data(0), next(nullptr)
     {
     }
-    ListNode(int x) : val(x), next(nullptr) {}
-    ListNode(int x, ListNode *next) : val(x), next(next) {}
+    // Parameterized constructor (single argument)
+    Node(int x) : data(x), next(nullptr) {}
+    // Parameterized constructor (two arguments)
+    Node(int x, Node *next) : data(x), next(next) {}
 
 public:
+    // Display all nodes iteratively
     void displayList();
-    ~ListNode() { next = nullptr; }
+    // Default destructor
+    ~Node() { next = nullptr; }
 };
 
 class SingleLinkedList
 {
 
 private:
-    ListNode *head;
+    // Pointer to the current head as a Node obj
+    Node *head;
+    // Counter of number nodes in the linked list
+    int nNodes;
 
 public:
-    int nNodes = 0;
+    // Default constructor
     SingleLinkedList();
+    // Default destructor
     ~SingleLinkedList();
-    void insertAtBack(int val);
 
-    void insertAtHead(int val);
+    // Insert new data at back of the linked list
+    void insertAtBack(int data);
+    // Insert new data at head of the linked list
+    void insertAtHead(int data);
 
+    // Returns an int of number nodes
     int getNumberNodes();
 
-    ListNode *getHead();
+    // Returns a pointer to the current head
+    Node *getHead();
 
+    // Display the full
     void displayList();
 };

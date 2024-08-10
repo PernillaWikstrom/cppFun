@@ -1,56 +1,68 @@
 #include <iostream>
-#include <climits>
 #include <Manager.hpp>
 
-ListNode *Manager::mergeTwoSortedLists(ListNode *l1, ListNode *l2)
+Node *mergeTwoSortedLists(Node *n1, Node *n2)
 {
-    ListNode *result = NULL;
-
-    if (l1 == NULL)
-        return (l2);
-    else if (l2 == NULL)
-        return (l1);
-
-    if (l1->val <= l2->val)
+    // Base cases when either nodes are null
+    if (n1 == NULL)
     {
-        result = l1;
-        result->next = mergeTwoSortedLists(l1->next, l2);
+        return n2;
     }
-    else
+    else if (n2 == NULL)
     {
-        result = l2;
-        result->next = mergeTwoSortedLists(l1, l2->next);
+        return n1;
     }
-    return result;
+
+    Node *tmp = NULL;
+
+    // Takes the next node from n1 if its
+    // data is smaller or equal to n2s data
+    if (n1->data <= n2->data)
+    {
+        tmp = n1;
+        tmp->next = mergeTwoSortedLists(n1->next, n2);
+        return tmp;
+    }
+
+    // Otherwise takes the next node from n2
+    tmp = n2;
+    tmp->next = mergeTwoSortedLists(n1, n2->next);
+    return tmp;
 }
 
-SingleLinkedList Manager::addTwoNumbers(ListNode *l1, ListNode *l2)
+SingleLinkedList addTwoNumbers(Node *n1, Node *n2)
 {
     SingleLinkedList sNew;
     int carry = 0;
-    while (l1 != NULL || l2 != NULL || carry != 0)
+    // Iterate until empty
+    while (n1 != NULL || n2 != NULL || carry != 0)
     {
-        int x = l1 ? l1->val : 0;
-        int y = l2 ? l2->val : 0;
+        int x = n1 ? n1->data : 0;
+        int y = n2 ? n2->data : 0;
+        // Sum of the data
         int sum = carry + x + y;
+        // Integer division where everything above
+        // 10 will be be carried over to the next
         carry = sum / 10;
+        // The remainder will be inserted at back
         sNew.insertAtBack(sum % 10);
-        l1 = l1 ? l1->next : nullptr;
-        l2 = l2 ? l2->next : nullptr;
+        n1 = n1 ? n1->next : nullptr;
+        n2 = n2 ? n2->next : nullptr;
     }
     return sNew;
 }
 
-// Copy list into two subarrays
-void splitList(ListNode *origin, ListNode **partitionA, ListNode **partitionB)
+void splitList(Node *origin, Node **partitionA, Node **partitionB)
 {
-    ListNode *left;
-    ListNode *right;
+    // Creates two pointers in scope
+    Node *left;
+    Node *right;
+    // Copy the head and the next node
     left = origin;
     right = origin->next;
 
-    /* Advance 'left' two nodes, and advance 'right' one node
-     */
+    // Find midpoint by advance the right pointer twice per
+    // left pointer to node until reaching the right nullpointer
     while (right != NULL)
     {
         right = right->next;
@@ -61,28 +73,32 @@ void splitList(ListNode *origin, ListNode **partitionA, ListNode **partitionB)
         }
     }
 
-    /* 'left' is ... */
+    // Partition A start pointing at the origins head
     *partitionA = origin;
+    // Partition B start pointing at the midpoint
     *partitionB = left->next;
+
+    // Detach all nodes from the midpoint.
+    // (Since left points to origin it is affected and
+    // origin will points to a list that ends at the midpoint)
     left->next = NULL;
 }
 
-void Manager::mergeSortList(ListNode **l1)
+void mergeSortList(Node **n1)
 {
-    ListNode *head = *l1;
+    Node *head = *n1;
     if (head == NULL || head->next == NULL)
     {
         return;
     }
     // // // FIXME !!
-    ListNode *partitionA;
-    ListNode *partitionB;
+    Node *partitionA;
+    Node *partitionB;
 
-    // // // split until
     splitList(head, &partitionA, &partitionB);
 
     mergeSortList(&partitionA);
     mergeSortList(&partitionB);
 
-    *l1 = mergeTwoSortedLists(partitionA, partitionB);
+    *n1 = mergeTwoSortedLists(partitionA, partitionB);
 }
